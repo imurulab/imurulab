@@ -1,6 +1,7 @@
+```html
 <!DOCTYPE html>
-
 <html lang="ja">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -30,14 +31,13 @@ margin-bottom:40px;
 
 .header h1{
 font-size:4rem;
-letter-spacing:12px;
+letter-spacing:10px;
 font-weight:800;
 }
 
 .header p{
-margin-top:10px;
 color:#94a3b8;
-font-size:1.1rem;
+margin-top:10px;
 }
 
 .container{
@@ -50,19 +50,19 @@ gap:25px;
 
 .card{
 background:rgba(255,255,255,0.05);
-backdrop-filter:blur(12px);
+backdrop-filter:blur(10px);
 border:1px solid rgba(255,255,255,0.08);
 border-radius:20px;
 padding:30px;
 }
 
 .card h2{
-margin-bottom:25px;
+margin-bottom:20px;
 color:#7dd3fc;
 }
 
 .stat{
-margin-bottom:22px;
+margin-bottom:20px;
 }
 
 .stat-label{
@@ -81,10 +81,14 @@ color:#facc15;
 }
 
 .discovery{
-margin-top:25px;
-padding:18px;
+margin-top:20px;
+padding:15px;
 border-radius:12px;
 background:rgba(125,211,252,0.08);
+}
+
+.discovery p{
+margin-top:8px;
 line-height:1.6;
 }
 
@@ -94,14 +98,14 @@ padding:18px;
 margin-bottom:12px;
 border-radius:14px;
 background:rgba(255,255,255,0.05);
-color:white;
 text-decoration:none;
+color:white;
 font-size:1.1rem;
-transition:0.2s;
+transition:.2s;
 }
 
 .menu-item:hover{
-transform:translateX(8px);
+transform:translateX(6px);
 background:rgba(125,211,252,0.15);
 }
 
@@ -125,7 +129,6 @@ font-size:3rem;
 }
 
 </style>
-
 </head>
 
 <body>
@@ -159,14 +162,19 @@ font-size:3rem;
 <div class="stat-value" id="nextRank">9</div>
 </div>
 
+<div class="stat">
+<div class="stat-label">研究所レベル</div>
+<div class="stat-value" id="labLevel">Lv.1</div>
+</div>
+
 <div class="discovery">
-
 <strong>本日の発見</strong>
+<p id="message">ようこそ研究所へ。</p>
+</div>
 
-<p id="message">
-ようこそ研究所へ。
-</p>
-
+<div class="discovery">
+<strong>本日の発想カード</strong>
+<p id="ideaCard">読み込み中...</p>
 </div>
 
 </div>
@@ -175,15 +183,22 @@ font-size:3rem;
 
 <h2>行き先を選ぶ</h2>
 
-<a href="#" class="menu-item">🎵 音楽</a>
+<div class="discovery">
+<strong>NEW</strong>
+<p>AIでゲームを作る実験を追加予定</p>
+</div>
 
-<a href="#" class="menu-item">💡 アイデア</a>
+<br>
 
-<a href="#" class="menu-item">🧪 実験室</a>
+<a href="music.html" class="menu-item">🎵 音楽</a>
 
-<a href="#" class="menu-item">🎮 ゲーム</a>
+<a href="ideas.html" class="menu-item">💡 アイデア</a>
 
-<a href="#" class="menu-item">📚 保管庫</a>
+<a href="lab.html" class="menu-item">🧪 実験室</a>
+
+<a href="games.html" class="menu-item">🎮 ゲーム</a>
+
+<a href="archive.html" class="menu-item">📚 保管庫</a>
 
 </div>
 
@@ -236,8 +251,12 @@ next = "到達";
 document.getElementById("rank").innerText = rank;
 document.getElementById("nextRank").innerText = next;
 
-const messages = [
+let labLevel = Math.floor(visits / 10) + 1;
 
+document.getElementById("labLevel").innerText =
+"Lv." + labLevel;
+
+const messages = [
 "ようこそ研究所へ。",
 "観測を続けています。",
 "アイデアは突然現れる。",
@@ -245,16 +264,34 @@ const messages = [
 "面白いことは実験から始まる。",
 "小さなIMURUが増殖中。",
 "創作の種を探しています。",
-"発見は記録されました。",
-"観測者の存在を確認。",
-"研究はまだ始まったばかり。"
-
+"発見は記録されました。"
 ];
 
 document.getElementById("message").innerText =
-messages[visits % messages.length];
+messages[Math.floor(Math.random() * messages.length)];
+
+const ideas = [
+"足す",
+"引く",
+"逆転",
+"巨大化",
+"縮小",
+"擬人化",
+"合体",
+"交換",
+"未来化",
+"自動化",
+"分解する",
+"混ぜる",
+"再利用する",
+"観察する"
+];
+
+document.getElementById("ideaCard").innerText =
+ideas[Math.floor(Math.random() * ideas.length)];
 
 </script>
 
 </body>
 </html>
+```
