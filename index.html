@@ -1,69 +1,112 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>IMURU</title>
+
+<style>
+body{
+    background:#111;
+    color:white;
+    font-family:sans-serif;
+    text-align:center;
+    padding:40px;
+    max-width:900px;
+    margin:auto;
+}
+
+h1{
+    font-size:60px;
+    letter-spacing:8px;
+    margin-bottom:10px;
+}
+
+.subtitle{
+    color:#888;
+    margin-bottom:40px;
+}
+
+.card{
+    background:#1a1a1a;
+    border:1px solid #333;
+    border-radius:15px;
+    padding:20px;
+    margin:20px auto;
+    max-width:500px;
+}
+
+.menu{
+    margin-top:40px;
+}
+
+.menu p{
+    font-size:22px;
+    margin:15px;
+}
+
+.small{
+    color:#777;
+    font-size:14px;
+}
+</style>
+
 </head>
 
-<body style="
-background:#111;
-color:white;
-font-family:sans-serif;
-max-width:800px;
-margin:auto;
-padding-top:80px;
-text-align:center;
-">
+<body>
 
-<h1 style="
-font-size:60px;
-letter-spacing:8px;
-margin-bottom:10px;
-">
-IMURU
-</h1>
+<h1>IMURU</h1>
 
-<p style="
-color:#888;
-font-size:18px;
-">
+<div class="subtitle">
 創作と実験の記録
-</p>
-
-<hr style="
-width:300px;
-border:1px solid #333;
-margin:40px auto;
-">
-
-<div style="
-font-size:24px;
-line-height:2.5;
-">
-
-<p>🎵 音楽</p>
-
-<p>💡 アイデア</p>
-
-<p>🧪 実験室</p>
-
-<p>🎮 ゲーム</p>
-
-<p>📚 保管庫</p>
-
 </div>
 
-<hr style="
-width:300px;
-border:1px solid #333;
-margin:40px auto;
-">
+<div class="card">
+    <h2>あなたの観測記録</h2>
 
-<p style="
-color:#666;
-font-size:14px;
-">
-思いついたことを形にする場所
+    <p>観測回数</p>
+    <h3 id="visitCount">1</h3>
+
+    <p>研究員ランク</p>
+    <h3 id="rank">見習い研究員</h3>
+</div>
+
+<div class="menu">
+    <p>🎵 音楽</p>
+    <p>💡 アイデア</p>
+    <p>🧪 実験室</p>
+    <p>🎮 ゲーム</p>
+    <p>📚 保管庫</p>
+</div>
+
+<p class="small">
+今日も観測ありがとうございます
 </p>
+
+<script>
+
+let visits = localStorage.getItem("imuru_visits");
+
+if(!visits){
+    visits = 1;
+}else{
+    visits = Number(visits) + 1;
+}
+
+localStorage.setItem("imuru_visits", visits);
+
+document.getElementById("visitCount").innerText = visits;
+
+let rank = "見習い研究員";
+
+if(visits >= 5) rank = "研究員";
+if(visits >= 10) rank = "主任研究員";
+if(visits >= 25) rank = "上級研究員";
+if(visits >= 50) rank = "特別研究員";
+
+document.getElementById("rank").innerText = rank;
+
+</script>
 
 </body>
 </html>
