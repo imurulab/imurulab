@@ -1,19 +1,28 @@
-# IMURU LAB
+<!DOCTYPE html>
+<html>
+<head>
+<title>IMURU LAB</title>
+</head>
 
-night experiments / AI / music / visual ideas
+<body style="
+background:black;
+color:white;
+font-family:sans-serif;
+text-align:center;
+padding-top:100px;
+">
 
----
+<h1>IMURU</h1>
 
-## PROJECTS
+<p>night experiments</p>
 
-- MUSIC
-- AI VISUAL
-- DRIVE MODE
-- GAME IDEAS
-- EXPERIMENTS
+<br>
 
----
+<p>MUSIC</p>
+<p>LAB</p>
+<p>GAMES</p>
+<p>IDEAS</p>
+<p>ARCHIVE</p>
 
-## LOG
-
-starting the lab...
+</body>
+</html>
