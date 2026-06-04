@@ -1,110 +1,258 @@
 <!DOCTYPE html>
+
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>IMURU</title>
 
 <style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
 body{
-    background:#111;
-    color:white;
-    font-family:sans-serif;
-    text-align:center;
-    padding:40px;
-    max-width:900px;
-    margin:auto;
+font-family:"Segoe UI",sans-serif;
+background:linear-gradient(135deg,#0f172a,#111827,#1e293b);
+color:white;
+min-height:100vh;
+padding:40px;
 }
 
-h1{
-    font-size:60px;
-    letter-spacing:8px;
-    margin-bottom:10px;
+.header{
+text-align:center;
+margin-bottom:40px;
 }
 
-.subtitle{
-    color:#888;
-    margin-bottom:40px;
+.header h1{
+font-size:4rem;
+letter-spacing:12px;
+font-weight:800;
+}
+
+.header p{
+margin-top:10px;
+color:#94a3b8;
+font-size:1.1rem;
+}
+
+.container{
+max-width:1200px;
+margin:auto;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:25px;
 }
 
 .card{
-    background:#1a1a1a;
-    border:1px solid #333;
-    border-radius:15px;
-    padding:20px;
-    margin:20px auto;
-    max-width:500px;
+background:rgba(255,255,255,0.05);
+backdrop-filter:blur(12px);
+border:1px solid rgba(255,255,255,0.08);
+border-radius:20px;
+padding:30px;
 }
 
-.menu{
-    margin-top:40px;
+.card h2{
+margin-bottom:25px;
+color:#7dd3fc;
 }
 
-.menu p{
-    font-size:22px;
-    margin:15px;
+.stat{
+margin-bottom:22px;
 }
 
-.small{
-    color:#777;
-    font-size:14px;
+.stat-label{
+font-size:0.9rem;
+color:#94a3b8;
 }
+
+.stat-value{
+font-size:2rem;
+font-weight:bold;
+margin-top:5px;
+}
+
+.rank{
+color:#facc15;
+}
+
+.discovery{
+margin-top:25px;
+padding:18px;
+border-radius:12px;
+background:rgba(125,211,252,0.08);
+line-height:1.6;
+}
+
+.menu-item{
+display:block;
+padding:18px;
+margin-bottom:12px;
+border-radius:14px;
+background:rgba(255,255,255,0.05);
+color:white;
+text-decoration:none;
+font-size:1.1rem;
+transition:0.2s;
+}
+
+.menu-item:hover{
+transform:translateX(8px);
+background:rgba(125,211,252,0.15);
+}
+
+.footer{
+text-align:center;
+margin-top:40px;
+color:#64748b;
+font-size:0.9rem;
+}
+
+@media(max-width:800px){
+
+.container{
+grid-template-columns:1fr;
+}
+
+.header h1{
+font-size:3rem;
+}
+
+}
+
 </style>
 
 </head>
 
 <body>
 
+<div class="header">
+
 <h1>IMURU</h1>
 
-<div class="subtitle">
-創作と実験の記録
+<p>創作と実験の研究所</p>
+
+</div>
+
+<div class="container">
+
+<div class="card">
+
+<h2>観測記録</h2>
+
+<div class="stat">
+<div class="stat-label">観測回数</div>
+<div class="stat-value" id="visitCount">1</div>
+</div>
+
+<div class="stat">
+<div class="stat-label">研究員ランク</div>
+<div class="stat-value rank" id="rank">見習い研究員</div>
+</div>
+
+<div class="stat">
+<div class="stat-label">次の昇格まで</div>
+<div class="stat-value" id="nextRank">9</div>
+</div>
+
+<div class="discovery">
+
+<strong>本日の発見</strong>
+
+<p id="message">
+ようこそ研究所へ。
+</p>
+
+</div>
+
 </div>
 
 <div class="card">
-    <h2>あなたの観測記録</h2>
 
-    <p>観測回数</p>
-    <h3 id="visitCount">1</h3>
+<h2>行き先を選ぶ</h2>
 
-    <p>研究員ランク</p>
-    <h3 id="rank">見習い研究員</h3>
+<a href="#" class="menu-item">🎵 音楽</a>
+
+<a href="#" class="menu-item">💡 アイデア</a>
+
+<a href="#" class="menu-item">🧪 実験室</a>
+
+<a href="#" class="menu-item">🎮 ゲーム</a>
+
+<a href="#" class="menu-item">📚 保管庫</a>
+
 </div>
 
-<div class="menu">
-    <p>🎵 音楽</p>
-    <p>💡 アイデア</p>
-    <p>🧪 実験室</p>
-    <p>🎮 ゲーム</p>
-    <p>📚 保管庫</p>
 </div>
 
-<p class="small">
-今日も観測ありがとうございます
-</p>
+<div class="footer">
+
+IMURU Research Network
+
+</div>
 
 <script>
 
-let visits = localStorage.getItem("imuru_visits");
+let visits = Number(localStorage.getItem("imuru_visits") || 0);
 
-if(!visits){
-    visits = 1;
-}else{
-    visits = Number(visits) + 1;
-}
+visits++;
 
 localStorage.setItem("imuru_visits", visits);
 
 document.getElementById("visitCount").innerText = visits;
 
 let rank = "見習い研究員";
+let next = 10 - visits;
 
-if(visits >= 5) rank = "研究員";
-if(visits >= 10) rank = "主任研究員";
-if(visits >= 25) rank = "上級研究員";
-if(visits >= 50) rank = "特別研究員";
+if(visits >= 10){
+rank = "研究員";
+next = 50 - visits;
+}
+
+if(visits >= 50){
+rank = "主任研究員";
+next = 100 - visits;
+}
+
+if(visits >= 100){
+rank = "上級研究員";
+next = 1000 - visits;
+}
+
+if(visits >= 1000){
+rank = "伝説研究員";
+next = 10000 - visits;
+}
+
+if(visits >= 10000){
+rank = "創設者級研究員";
+next = "到達";
+}
 
 document.getElementById("rank").innerText = rank;
+document.getElementById("nextRank").innerText = next;
+
+const messages = [
+
+"ようこそ研究所へ。",
+"観測を続けています。",
+"アイデアは突然現れる。",
+"今日は何を作りますか？",
+"面白いことは実験から始まる。",
+"小さなIMURUが増殖中。",
+"創作の種を探しています。",
+"発見は記録されました。",
+"観測者の存在を確認。",
+"研究はまだ始まったばかり。"
+
+];
+
+document.getElementById("message").innerText =
+messages[visits % messages.length];
 
 </script>
 
