@@ -1,12 +1,12 @@
-```html
 <!DOCTYPE html>
 <html lang="ja">
 
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>IMURU</title>
+<title>IMURU Inc.</title>
 
 <style>
 
@@ -17,279 +17,683 @@ box-sizing:border-box;
 }
 
 body{
-font-family:"Segoe UI",sans-serif;
-background:linear-gradient(135deg,#0f172a,#111827,#1e293b);
+
+font-family:
+"Segoe UI",
+"Helvetica Neue",
+Arial,
+sans-serif;
+
+background:
+linear-gradient(
+135deg,
+#020617,
+#0f172a,
+#1e293b
+);
+
 color:white;
+
 min-height:100vh;
+
 padding:40px;
+
 }
+
 
 .header{
+
 text-align:center;
-margin-bottom:40px;
+
+margin-bottom:50px;
+
 }
 
-.header h1{
+
+.logo{
+
 font-size:4rem;
-letter-spacing:10px;
-font-weight:800;
+
+letter-spacing:12px;
+
+font-weight:900;
+
 }
 
-.header p{
+
+.subtitle{
+
 color:#94a3b8;
-margin-top:10px;
+
+margin-top:15px;
+
+font-size:1.2rem;
+
 }
+
+
 
 .container{
-max-width:1200px;
+
+max-width:1100px;
+
 margin:auto;
+
 display:grid;
-grid-template-columns:1fr 1fr;
+
+grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+
 gap:25px;
+
 }
+
+
 
 .card{
-background:rgba(255,255,255,0.05);
-backdrop-filter:blur(10px);
-border:1px solid rgba(255,255,255,0.08);
-border-radius:20px;
-padding:30px;
+
+background:
+rgba(255,255,255,0.06);
+
+border:
+
+1px solid rgba(255,255,255,0.12);
+
+border-radius:24px;
+
+padding:35px;
+
+backdrop-filter:blur(15px);
+
+box-shadow:
+0 20px 40px rgba(0,0,0,0.3);
+
 }
+
+
 
 .card h2{
-margin-bottom:20px;
+
 color:#7dd3fc;
-}
 
-.stat{
 margin-bottom:20px;
+
+font-size:1.5rem;
+
 }
 
-.stat-label{
-font-size:0.9rem;
-color:#94a3b8;
-}
 
-.stat-value{
+
+.ceo{
+
 font-size:2rem;
+
 font-weight:bold;
-margin-top:5px;
+
+color:#facc15;
+
+margin-bottom:15px;
+
 }
+
+
+
+.text{
+
+line-height:1.8;
+
+color:#e2e8f0;
+
+}
+
+
+
+.status{
+
+font-size:2.5rem;
+
+font-weight:bold;
+
+margin:10px 0;
+
+}
+
+
 
 .rank{
+
 color:#facc15;
+
 }
+
+
+
+.menu{
+
+display:block;
+
+text-decoration:none;
+
+color:white;
+
+padding:18px;
+
+margin-top:12px;
+
+background:
+
+rgba(255,255,255,0.05);
+
+border-radius:15px;
+
+transition:.3s;
+
+}
+
+
+
+.menu:hover{
+
+transform:translateX(8px);
+
+background:
+
+rgba(125,211,252,0.2);
+
+}
+
+
 
 .discovery{
-margin-top:20px;
-padding:15px;
-border-radius:12px;
-background:rgba(125,211,252,0.08);
-}
 
-.discovery p{
-margin-top:8px;
-line-height:1.6;
-}
+margin-top:15px;
 
-.menu-item{
-display:block;
 padding:18px;
-margin-bottom:12px;
-border-radius:14px;
-background:rgba(255,255,255,0.05);
-text-decoration:none;
-color:white;
-font-size:1.1rem;
-transition:.2s;
+
+border-radius:15px;
+
+background:
+
+rgba(125,211,252,0.08);
+
+line-height:1.7;
+
 }
 
-.menu-item:hover{
-transform:translateX(6px);
-background:rgba(125,211,252,0.15);
-}
+
 
 .footer{
+
 text-align:center;
-margin-top:40px;
+
+margin-top:50px;
+
 color:#64748b;
-font-size:0.9rem;
+
 }
 
-@media(max-width:800px){
 
-.container{
-grid-template-columns:1fr;
+
+.badge{
+
+display:inline-block;
+
+padding:8px 15px;
+
+border-radius:20px;
+
+background:#0ea5e9;
+
+margin-top:10px;
+
 }
 
-.header h1{
+
+
+@media(max-width:700px){
+
+body{
+
+padding:20px;
+
+}
+
+
+.logo{
+
 font-size:3rem;
+
 }
 
 }
+
 
 </style>
+
+
 </head>
+
 
 <body>
 
+
+
 <div class="header">
 
-<h1>IMURU</h1>
 
-<p>創作と実験の研究所</p>
+<div class="logo">
+
+IMURU Inc.
 
 </div>
+
+
+<div class="subtitle">
+
+Future Creation Company
+
+未来創造研究企業
+
+</div>
+
+
+</div>
+
+
+
 
 <div class="container">
 
-<div class="card">
 
-<h2>観測記録</h2>
-
-<div class="stat">
-<div class="stat-label">観測回数</div>
-<div class="stat-value" id="visitCount">1</div>
-</div>
-
-<div class="stat">
-<div class="stat-label">研究員ランク</div>
-<div class="stat-value rank" id="rank">見習い研究員</div>
-</div>
-
-<div class="stat">
-<div class="stat-label">次の昇格まで</div>
-<div class="stat-value" id="nextRank">9</div>
-</div>
-
-<div class="stat">
-<div class="stat-label">研究所レベル</div>
-<div class="stat-value" id="labLevel">Lv.1</div>
-</div>
-
-<div class="discovery">
-<strong>本日の発見</strong>
-<p id="message">ようこそ研究所へ。</p>
-</div>
-
-<div class="discovery">
-<strong>本日の発想カード</strong>
-<p id="ideaCard">読み込み中...</p>
-</div>
-
-</div>
 
 <div class="card">
 
-<h2>行き先を選ぶ</h2>
+
+<h2>Corporate Philosophy</h2>
+
+
+<p class="text">
+
+
+「遊びから、未来を作る。」
+
+
+<br><br>
+
+
+IMURU Inc.は、
+
+まだ存在しない価値を研究し、
+
+アイデアを形にする未来創造企業です。
+
+
+</p>
+
+
+</div>
+
+
+
+
+
+<div class="card">
+
+
+<h2>CEO</h2>
+
+
+<div class="ceo">
+
+キリンゴリラ
+
+</div>
+
+
+<p class="text">
+
+
+高い視点で未来を見渡し、
+
+ゴリラのような力強さで挑戦する。
+
+
+<br><br>
+
+
+専門：
+
+未来予測 / 新規事業 / バナナ経済研究
+
+
+</p>
+
+
+</div>
+
+
+
+
+
+
+<div class="card">
+
+
+<h2>Research Status</h2>
+
+
+
+<div>
+
+研究員ランク
+
+</div>
+
+
+<div class="status rank" id="rank">
+
+見習い研究員
+
+</div>
+
+
+<div>
+
+研究ログ
+
+<span id="visits">
+
+0
+
+</span>
+
+回
+
+</div>
+
+
+
+<div class="badge">
+
+IMURU LEVEL
+
+<span id="level">
+
+1
+
+</span>
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+<div class="card">
+
+
+<h2>Business Division</h2>
+
+
+<a class="menu" href="music.html">
+
+🎵 Music Research
+
+音楽研究部
+
+</a>
+
+
+<a class="menu" href="ideas.html">
+
+💡 Idea Development
+
+企画研究部
+
+</a>
+
+
+<a class="menu" href="lab.html">
+
+🧪 R&D Laboratory
+
+研究開発部
+
+</a>
+
+
+<a class="menu" href="games.html">
+
+🎮 Entertainment
+
+遊び研究部
+
+</a>
+
+
+
+</div>
+
+
+
+
+
+
+
+<div class="card">
+
+
+<h2>Today's Research</h2>
+
+
+<div class="discovery" id="message">
+
+読み込み中...
+
+</div>
+
+
 
 <div class="discovery">
-<strong>NEW</strong>
-<p>AIでゲームを作る実験を追加予定</p>
-</div>
+
+
+発想カード
 
 <br>
 
-<a href="music.html" class="menu-item">🎵 音楽</a>
 
-<a href="ideas.html" class="menu-item">💡 アイデア</a>
+<strong id="idea">
 
-<a href="lab.html" class="menu-item">🧪 実験室</a>
+-
 
-<a href="games.html" class="menu-item">🎮 ゲーム</a>
+</strong>
 
-<a href="archive.html" class="menu-item">📚 保管庫</a>
 
 </div>
 
+
 </div>
+
+
+
+
+
+<div class="card">
+
+
+<h2>Future Message</h2>
+
+
+<p class="text">
+
+
+失敗は失敗ではない。
+
+
+それは未来へ残す研究記録。
+
+
+IMURU Inc.では、
+
+未完成も価値として保存します。
+
+
+</p>
+
+
+</div>
+
+
+
+
+</div>
+
+
+
+
+
 
 <div class="footer">
 
-IMURU Research Network
+
+IMURU Research Network © 2026
+
 
 </div>
 
+
+
+
+
+
 <script>
 
-let visits = Number(localStorage.getItem("imuru_visits") || 0);
+
+let visits =
+
+Number(localStorage.getItem("imuru_visits") || 0);
+
 
 visits++;
 
-localStorage.setItem("imuru_visits", visits);
 
-document.getElementById("visitCount").innerText = visits;
+localStorage.setItem(
+
+"imuru_visits",
+
+visits
+
+);
+
+
+
+document.getElementById("visits").innerText = visits;
+
+
 
 let rank = "見習い研究員";
-let next = 10 - visits;
+
 
 if(visits >= 10){
-rank = "研究員";
-next = 50 - visits;
+
+rank="研究員";
+
 }
+
 
 if(visits >= 50){
-rank = "主任研究員";
-next = 100 - visits;
+
+rank="主任研究員";
+
 }
 
-if(visits >= 100){
-rank = "上級研究員";
-next = 1000 - visits;
+
+if(visits >=100){
+
+rank="上級研究員";
+
 }
 
-if(visits >= 1000){
-rank = "伝説研究員";
-next = 10000 - visits;
+
+if(visits >=1000){
+
+rank="伝説研究員";
+
 }
 
-if(visits >= 10000){
-rank = "創設者級研究員";
-next = "到達";
-}
 
 document.getElementById("rank").innerText = rank;
-document.getElementById("nextRank").innerText = next;
 
-let labLevel = Math.floor(visits / 10) + 1;
 
-document.getElementById("labLevel").innerText =
-"Lv." + labLevel;
 
-const messages = [
-"ようこそ研究所へ。",
-"観測を続けています。",
-"アイデアは突然現れる。",
-"今日は何を作りますか？",
-"面白いことは実験から始まる。",
-"小さなIMURUが増殖中。",
-"創作の種を探しています。",
-"発見は記録されました。"
+document.getElementById("level").innerText =
+
+Math.floor(visits / 10)+1;
+
+
+
+
+
+const messages=[
+
+
+"新しい発想を観測しました。",
+
+"未来の可能性を研究中です。",
+
+"面白いアイデアは突然現れる。",
+
+"本日の実験を開始します。",
+
+"未知への挑戦を記録しました。"
+
 ];
+
 
 document.getElementById("message").innerText =
-messages[Math.floor(Math.random() * messages.length)];
 
-const ideas = [
-"足す",
-"引く",
-"逆転",
-"巨大化",
-"縮小",
-"擬人化",
-"合体",
-"交換",
-"未来化",
-"自動化",
-"分解する",
-"混ぜる",
-"再利用する",
-"観察する"
+messages[Math.floor(Math.random()*messages.length)];
+
+
+
+
+
+const ideas=[
+
+
+"巨大化する",
+
+"逆転する",
+
+"未来化する",
+
+"合体する",
+
+"擬人化する",
+
+"自動化する",
+
+"別用途に変える"
+
 ];
 
-document.getElementById("ideaCard").innerText =
-ideas[Math.floor(Math.random() * ideas.length)];
+
+
+document.getElementById("idea").innerText =
+
+ideas[Math.floor(Math.random()*ideas.length)];
+
+
 
 </script>
 
+
+
 </body>
+
+</html>
