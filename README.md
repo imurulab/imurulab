@@ -1,696 +1,98 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>IMURU Inc.</title>
+# IMURU Inc. — Corporate Site
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500&family=Megrim&family=Zen+Kaku+Gothic+New:wght@500;700&display=swap" rel="stylesheet">
+> 「遊びから、未来を作る。」
 
-<style>
+IMURU Inc.（未来創造研究企業）のコーポレートサイトです。
+HTML / CSS / JavaScript のみで構成されたシングルページで、外部ライブラリやビルドツールに依存しません。
 
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
+---
 
-:root{
-  --bg-1:#020617;
-  --bg-2:#0f172a;
-  --bg-3:#1e293b;
-  --cyan:#7dd3fc;
-  --gold:#facc15;
-  --text:#e2e8f0;
-  --muted:#94a3b8;
-  --faint:#64748b;
-  --display: "Space Grotesk", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
-  --body-font: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
-  --mono: "JetBrains Mono", monospace;
-}
+## 🧬 概要
 
-html{
-  scroll-behavior:smooth;
-}
+- 架空の研究企業「IMURU Inc.」のブランドサイト
+- 背景にループ動画を敷いたダーク系デザイン
+- アクセスするたびに「研究員ランク」「レベル」が上がるミニゲーム要素付き
+- レベルに応じて事業部門ページがアンロックされる仕組み
 
-body{
-  font-family:var(--body-font);
-  background: linear-gradient(135deg, var(--bg-1), var(--bg-2), var(--bg-3));
-  color:var(--text);
-  min-height:100vh;
-  position:relative;
-}
+## 📁 ファイル構成
 
-/* ---------- 背景動画 ---------- */
+```
+.
+├── index.html                                  # サイト本体（HTML/CSS/JS）
+└── motion_2.0-fast_A_single_amoeba_...mp4      # 背景に再生するループ動画
+```
 
-.bg-video{
-  position:fixed;
-  top:0; left:0;
-  width:100%; height:100%;
-  object-fit:cover;
-  z-index:-2;
-}
+> 動画ファイルは `<video class="bg-video">` の `src` で参照しています。
+> 同階層に配置するか、パスを実際のファイルに合わせて変更してください。
 
-.bg-overlay{
-  position:fixed;
-  top:0; left:0;
-  width:100%; height:100%;
-  background:
-    radial-gradient(circle at 50% 0%, rgba(15,23,42,0.35), rgba(2,6,23,0.82) 70%);
-  z-index:-1;
-}
+## 🔍 ページ構成
 
-/* ---------- 共通レイアウト ---------- */
+| セクション | 内容 |
+|---|---|
+| Hero | ロゴ・キャッチコピー・スクロール誘導 |
+| Corporate Philosophy | 企業理念 |
+| Leadership | CEO紹介（`ceo.html` へリンク） |
+| Business Division | 事業部一覧（一部レベル制限あり） |
+| Careers | 採用情報（無償参加・見学者・バナナ供給担当など） |
+| Today's Research / Future Message | ランダム表示される研究メッセージ |
+| Footer | コピーライト表記 |
 
-main{
-  max-width:960px;
-  margin:0 auto;
-  padding:0 32px;
-}
+## 🔒 レベル / ロック機構
 
-.section-label{
-  font-family:var(--mono);
-  font-size:0.8rem;
-  letter-spacing:3px;
-  text-transform:uppercase;
-  color:var(--cyan);
-  margin-bottom:18px;
-}
+ページ最上部のステータスバーに、訪問回数に応じた以下の情報を表示します（`localStorage` で管理）。
 
-.text{
-  line-height:1.9;
-  color:var(--text);
-  font-size:1.05rem;
-}
+- **研究ログ（訪問回数）**：`imuru_visits` に保存され、アクセスごとに加算
+- **LEVEL**：`Math.floor(訪問回数 / 10) + 1` で算出
+- **研究員ランク**：訪問回数に応じて変化
 
-/* ---------- ヒーロー ---------- */
+| 訪問回数 | ランク |
+|---|---|
+| 0〜 | 見習い研究員 |
+| 10〜 | 研究員 |
+| 50〜 | 主任研究員 |
+| 100〜 | 上級研究員 |
+| 1000〜 | 伝説研究員 |
 
-.hero{
-  min-height:92vh;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  padding:40px;
-  position:relative;
-}
+事業部タイルは `data-required-level` 属性でロック条件を指定できます。現在のレベルが満たない場合、リンクが無効化され `🔒 LV.◯で解放` バッジが表示されます。
 
-.eyebrow{
-  font-family:var(--mono);
-  font-size:0.8rem;
-  letter-spacing:5px;
-  color:var(--muted);
-  margin-bottom:24px;
-}
+```html
+<a class="division-tile lockable" href="ideas.html" data-required-level="10">
+```
 
-.logo{
-  font-family:"Megrim", var(--display);
-  font-size:5.4rem;
-  font-weight:400;
-  letter-spacing:14px;
-  line-height:1.1;
-  background:linear-gradient(120deg, var(--cyan), var(--gold), var(--cyan));
-  background-size:200% auto;
-  -webkit-background-clip:text;
-  background-clip:text;
-  color:transparent;
-  animation:shimmer 7s linear infinite;
-}
+| 部門 | 必要レベル |
+|---|---|
+| 企画研究部（Idea Development） | LV.10 |
+| 言語研究部（Language Research） | LV.3 |
+| 遊び研究部（Entertainment） | LV.20 |
 
-@keyframes shimmer{
-  0%{ background-position:0% center; }
-  100%{ background-position:200% center; }
-}
+## 🎨 デザイン
 
-.hero .subtitle{
-  color:var(--muted);
-  margin-top:18px;
-  font-size:1.15rem;
-  letter-spacing:2px;
-}
+- フォント：Google Fonts（`Space Grotesk` / `JetBrains Mono` / `Megrim` / `Zen Kaku Gothic New`）
+- カラーパレット：ダークネイビー × シアン × ゴールド（CSS変数 `:root` 内で一括管理）
+- レスポンシブ：`max-width:700px` でモバイル向けレイアウトに切り替え
 
-.tagline{
-  margin-top:40px;
-  font-size:1.3rem;
-  color:var(--gold);
-  font-weight:500;
-}
+## 🛠 カスタマイズ方法
 
-.scroll-cue{
-  position:absolute;
-  bottom:36px;
-  font-family:var(--mono);
-  font-size:0.75rem;
-  letter-spacing:3px;
-  color:var(--faint);
-  animation:float 2.2s ease-in-out infinite;
-}
+- **背景動画を変更**：`.bg-video` 内の `<source src="...">` を差し替え
+- **メッセージ・発想カードを追加**：`<script>` 内の `messages` / `ideas` 配列に文言を追加
+- **配色を変更**：`:root` 内の `--cyan` / `--gold` / `--bg-*` などの変数を編集
+- **新しい事業部を追加**：`.division-grid` 内に `.division-tile` を複製し、必要に応じて `lockable` クラスと `data-required-level` を付与
 
-@keyframes float{
-  0%,100%{ transform:translateY(0); opacity:0.6; }
-  50%{ transform:translateY(8px); opacity:1; }
-}
+## 🚀 使い方
 
-/* ---------- セクション共通 ---------- */
+ビルド不要です。`index.html` をブラウザで直接開くか、任意の静的ホスティング（GitHub Pages, Netlify, Vercel など）にそのままデプロイしてください。
 
-.section{
-  padding:90px 0;
-  border-top:1px solid rgba(255,255,255,0.08);
-}
+```bash
+# ローカルで確認する場合（例: Python の簡易サーバー）
+python -m http.server 8000
+```
 
-/* ---------- Philosophy ---------- */
+ブラウザで `http://localhost:8000` にアクセスして確認できます。
 
-.philosophy-text{
-  font-family:var(--display);
-  font-size:1.7rem;
-  font-weight:500;
-  line-height:1.7;
-  color:var(--text);
-}
+## 📄 ライセンス
 
-/* ---------- Leadership ---------- */
+社内利用想定のため未設定。必要に応じて追記してください。
 
-.ceo-name{
-  font-family:"Zen Kaku Gothic New", var(--display);
-  font-size:2.6rem;
-  font-weight:700;
-  letter-spacing:6px;
-  color:var(--gold);
-  display:flex;
-  align-items:baseline;
-  gap:16px;
-  flex-wrap:wrap;
-}
+---
 
-.ceo-title{
-  font-family:var(--mono);
-  font-size:0.85rem;
-  letter-spacing:2px;
-  color:var(--muted);
-  font-weight:400;
-}
-
-.ceo-desc{
-  margin-top:18px;
-  line-height:1.9;
-  color:var(--text);
-  font-size:1.05rem;
-}
-
-.ceo-tags{
-  margin-top:24px;
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-}
-
-.ceo-tags span{
-  font-family:var(--mono);
-  font-size:0.8rem;
-  padding:6px 14px;
-  border:1px solid rgba(125,211,252,0.4);
-  border-radius:20px;
-  color:var(--cyan);
-}
-
-/* ---------- Divisions ---------- */
-
-.division-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
-  gap:16px;
-}
-
-.division-tile{
-  display:flex;
-  flex-direction:column;
-  gap:6px;
-  text-decoration:none;
-  padding:26px;
-  border-radius:16px;
-  background:rgba(255,255,255,0.04);
-  border:1px solid rgba(255,255,255,0.1);
-  transition:.25s;
-  position:relative;
-}
-
-.division-tile:hover{
-  background:rgba(125,211,252,0.12);
-  border-color:rgba(125,211,252,0.5);
-  transform:translateY(-4px);
-}
-
-.division-tile.disabled{
-  border-style:dashed;
-  opacity:0.6;
-  pointer-events:none;
-}
-
-.division-tile.disabled:hover{
-  transform:none;
-}
-
-.division-tile.locked{
-  opacity:0.45;
-  filter:grayscale(0.5);
-  pointer-events:none;
-  border-style:dashed;
-}
-
-.division-tile.locked:hover{
-  transform:none;
-}
-
-.d-badge.locked{
-  background:rgba(148,163,184,0.12);
-  color:var(--muted);
-  border-color:rgba(148,163,184,0.35);
-}
-
-.lock-badge:empty{
-  display:none;
-}
-
-.d-badge{
-  position:absolute;
-  top:18px;
-  right:18px;
-  font-family:var(--mono);
-  font-size:0.65rem;
-  letter-spacing:1.5px;
-  padding:3px 9px;
-  border-radius:10px;
-  background:rgba(250,204,21,0.15);
-  color:var(--gold);
-  border:1px solid rgba(250,204,21,0.4);
-}
-
-.d-badge.external{
-  background:rgba(74,222,128,0.12);
-  color:#4ade80;
-  border-color:rgba(74,222,128,0.4);
-}
-
-.d-note{
-  margin-top:4px;
-  font-size:0.8rem;
-  color:var(--faint);
-}
-
-.d-icon{ font-size:1.6rem; }
-
-.d-en{
-  font-family:var(--display);
-  font-size:1.1rem;
-  font-weight:700;
-  color:white;
-}
-
-.d-jp{
-  font-size:0.9rem;
-  color:var(--muted);
-}
-
-/* ---------- Careers ---------- */
-
-.career-strip{
-  display:flex;
-  align-items:flex-start;
-  padding:30px 36px;
-  border-radius:18px;
-  background:rgba(2,6,23,0.45);
-  border:1px solid rgba(125,211,252,0.18);
-  backdrop-filter:blur(8px);
-  flex-wrap:wrap;
-}
-
-.career-col{
-  flex:1;
-  min-width:180px;
-  display:flex;
-  flex-direction:column;
-  gap:8px;
-}
-
-.career-divider{
-  width:1px;
-  align-self:stretch;
-  background:rgba(255,255,255,0.12);
-  margin:2px 30px;
-}
-
-.career-top{
-  display:flex;
-  flex-direction:column;
-  gap:8px;
-}
-
-.career-title{
-  font-family:var(--display);
-  font-size:1.2rem;
-  font-weight:700;
-  color:white;
-  letter-spacing:0.5px;
-}
-
-.career-tag{
-  align-self:flex-start;
-  font-family:var(--mono);
-  font-size:0.7rem;
-  letter-spacing:1.5px;
-  padding:4px 10px;
-  border-radius:10px;
-  background:rgba(125,211,252,0.12);
-  color:var(--cyan);
-  border:1px solid rgba(125,211,252,0.35);
-}
-
-.career-desc{
-  margin-top:8px;
-  font-size:0.92rem;
-  color:var(--muted);
-}
-
-.career-cta{
-  margin-top:26px;
-  font-size:0.95rem;
-  color:var(--gold);
-}
-
-/* ---------- Today's Research / Future Message ---------- */
-
-.split{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:50px;
-}
-
-.discovery{
-  margin-top:6px;
-  line-height:1.8;
-  color:var(--text);
-}
-
-.idea-card{
-  margin-top:16px;
-  font-size:0.95rem;
-  color:var(--muted);
-}
-
-.idea-card strong{
-  color:var(--cyan);
-  font-family:var(--mono);
-}
-
-/* ---------- テレメトリ（研究ステータス）バー ---------- */
-
-/* ---------- ステータスバー（最上部・一行） ---------- */
-
-.status-bar{
-  position:sticky;
-  top:0;
-  z-index:10;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:14px;
-  flex-wrap:nowrap;
-  overflow-x:auto;
-  padding:10px 20px;
-  background:rgba(2,6,23,0.65);
-  border-bottom:1px solid rgba(125,211,252,0.18);
-  backdrop-filter:blur(10px);
-  white-space:nowrap;
-}
-
-.status-item{
-  font-family:var(--mono);
-  font-size:0.78rem;
-  letter-spacing:0.5px;
-  color:var(--muted);
-}
-
-.status-item strong{
-  color:var(--gold);
-  font-weight:500;
-}
-
-.status-sep{
-  color:rgba(255,255,255,0.2);
-  font-size:0.78rem;
-}
-
-.status-bar .live-dot{
-  margin-left:4px;
-}
-
-.live-dot{
-  width:8px;
-  height:8px;
-  border-radius:50%;
-  background:#4ade80;
-  box-shadow:0 0 8px #4ade80;
-  animation:pulse 1.8s infinite;
-}
-
-@keyframes pulse{
-  0%,100%{ opacity:1; }
-  50%{ opacity:0.3; }
-}
-
-/* ---------- フッター ---------- */
-
-.footer{
-  text-align:center;
-  padding:40px;
-  color:var(--faint);
-  font-family:var(--mono);
-  font-size:0.8rem;
-  letter-spacing:1px;
-}
-
-/* ---------- レスポンシブ（最低限） ---------- */
-
-@media(max-width:700px){
-  .logo{ font-size:2.8rem; letter-spacing:6px; }
-  .split{ grid-template-columns:1fr; gap:36px; }
-  .career-strip{ flex-direction:column; }
-  .career-divider{ display:none; }
-  .status-bar{ justify-content:flex-start; gap:10px; }
-}
-
-</style>
-</head>
-
-<body>
-
-<video class="bg-video" autoplay muted loop playsinline>
-  <source src="motion_2.0-fast_A_single_amoeba_its_translucent_form_subtly_pulsing_begins_a_slow_deliberate_mov-0.mp4" type="video/mp4">
-</video>
-<div class="bg-overlay"></div>
-
-<div class="status-bar">
-  <span class="status-item">研究員ランク：<strong id="rank">見習い研究員</strong></span>
-  <span class="status-sep">|</span>
-  <span class="status-item">研究ログ：<strong id="visits">0</strong>回</span>
-  <span class="status-sep">|</span>
-  <span class="status-item">LEVEL <strong id="level">1</strong></span>
-  <span class="live-dot"></span>
-</div>
-
-<header class="hero">
-  <div class="eyebrow">FUTURE CREATION COMPANY</div>
-  <h1 class="logo">IMURU Inc.</h1>
-  <p class="subtitle">未来創造研究企業</p>
-  <p class="tagline">「遊びから、未来を作る。」</p>
-  <div class="scroll-cue">SCROLL ▾</div>
-</header>
-
-<main>
-
-  <section class="section philosophy">
-    <div class="section-label">Corporate Philosophy</div>
-    <p class="philosophy-text">
-      IMURU Inc.は、まだ存在しない価値を研究し、<br>
-      アイデアを形にする未来創造企業です。
-    </p>
-  </section>
-
-  <section class="section leadership">
-    <div class="section-label">Leadership</div>
-    <div class="ceo-name">キリンゴリラ <span class="ceo-title">CEO</span></div>
-    <p class="ceo-desc">
-      高い視点で未来を見渡し、<br>
-      ゴリラのような力強さで挑戦する。
-    </p>
-    <div class="ceo-tags">
-      <span>未来予測</span>
-      <span>新規事業</span>
-      <span>バナナ経済研究</span>
-    </div>
-  </section>
-
-  <section class="section divisions">
-    <div class="section-label">Business Division</div>
-    <div class="division-grid">
-      <a class="division-tile lockable" href="ideas.html" data-required-level="10">
-        <span class="d-badge lock-badge"></span>
-        <span class="d-icon">💡</span>
-        <span class="d-en">Idea Development</span>
-        <span class="d-jp">企画研究部</span>
-      </a>
-      <a class="division-tile lockable" href="language.html" data-required-level="3">
-        <span class="d-badge lock-badge"></span>
-        <span class="d-icon">🗣️</span>
-        <span class="d-en">Language Research</span>
-        <span class="d-jp">言語研究部</span>
-      </a>
-      <a class="division-tile lockable" href="games.html" data-required-level="20">
-        <span class="d-badge lock-badge"></span>
-        <span class="d-icon">🎮</span>
-        <span class="d-en">Entertainment</span>
-        <span class="d-jp">遊び研究部</span>
-      </a>
-      <a class="division-tile" href="https://open.spotify.com/artist/0oNsvbcBUtlcrwX3NywQ9F" target="_blank" rel="noopener noreferrer">
-        <span class="d-badge external">SPOTIFY</span>
-        <span class="d-icon">🎧</span>
-        <span class="d-en">Sound Release</span>
-        <span class="d-jp">音源配信部</span>
-        <span class="d-note">最新リリース「ロシアンルーレット」配信中</span>
-      </a>
-      <a class="division-tile" href="#careers">
-        <span class="d-icon">👥</span>
-        <span class="d-en">Creator Division</span>
-        <span class="d-jp">クリエイター部門</span>
-        <span class="d-note">研究員・採用情報はこちら</span>
-      </a>
-      <div class="division-tile disabled">
-        <span class="d-badge">COMING SOON</span>
-        <span class="d-icon">🌵</span>
-        <span class="d-en">Agave Lab</span>
-        <span class="d-jp">アガベ研究・販売部</span>
-        <span class="d-note">準備中です</span>
-      </div>
-    </div>
-  </section>
-
-  <section class="section careers" id="careers">
-    <div class="section-label">Careers / 採用情報</div>
-    <p class="text" style="margin-bottom:30px;">
-      IMURU Inc.では、好奇心を研究に変える仲間を探しています。<br>
-      未完成な発想も、一緒に育ててくれる方を歓迎します。
-    </p>
-
-    <div class="career-strip">
-      <div class="career-col">
-        <div class="career-top">
-          <span class="career-title">アイデア協力者</span>
-          <span class="career-tag">無償・自由参加</span>
-        </div>
-        <p class="career-desc">思いつきをぶつけてくれるだけで十分です</p>
-      </div>
-      <div class="career-divider"></div>
-      <div class="career-col">
-        <div class="career-top">
-          <span class="career-title">見学者</span>
-          <span class="career-tag">随時受付</span>
-        </div>
-        <p class="career-desc">研究所の雰囲気を覗いてみたい方へ</p>
-      </div>
-      <div class="career-divider"></div>
-      <div class="career-col">
-        <div class="career-top">
-          <span class="career-title">バナナ供給担当</span>
-          <span class="career-tag">現物支給制</span>
-        </div>
-        <p class="career-desc">お給料は、もれなくバナナです</p>
-      </div>
-    </div>
-    <p class="career-cta">★返信や謝礼はお約束できませんが、気が向いたら覗きに来てください。</p>
-  </section>
-
-  <section class="section split">
-    <div>
-      <div class="section-label">Today's Research</div>
-      <p class="discovery" id="message">読み込み中...</p>
-      <p class="idea-card">発想カード：<strong id="idea">-</strong></p>
-    </div>
-    <div>
-      <div class="section-label">Future Message</div>
-      <p class="text">
-        失敗は失敗ではない。それは未来へ残す研究記録。<br>
-        IMURU Inc.では、未完成も価値として保存します。
-      </p>
-    </div>
-  </section>
-
-</main>
-
-<div class="footer">IMURU Research Network © 2026</div>
-
-<script>
-
-let visits = Number(localStorage.getItem("imuru_visits") || 0);
-visits++;
-localStorage.setItem("imuru_visits", visits);
-
-document.getElementById("visits").innerText = visits;
-
-let rank = "見習い研究員";
-if(visits >= 10){ rank="研究員"; }
-if(visits >= 50){ rank="主任研究員"; }
-if(visits >=100){ rank="上級研究員"; }
-if(visits >=1000){ rank="伝説研究員"; }
-document.getElementById("rank").innerText = rank;
-
-document.getElementById("level").innerText = Math.floor(visits / 10)+1;
-
-const currentLevel = Math.floor(visits / 10)+1;
-
-document.querySelectorAll(".lockable").forEach(function(tile){
-  const required = Number(tile.dataset.requiredLevel);
-  const badge = tile.querySelector(".lock-badge");
-  if(currentLevel < required){
-    tile.classList.add("locked");
-    tile.removeAttribute("href");
-    if(badge){
-      badge.textContent = "🔒 LV." + required + "で解放";
-      badge.classList.add("locked");
-    }
-  } else {
-    tile.classList.remove("locked");
-    if(badge){
-      badge.textContent = "";
-    }
-  }
-});
-
-const messages=[
-  "新しい発想を観測しました。",
-  "未来の可能性を研究中です。",
-  "面白いアイデアは突然現れる。",
-  "本日の実験を開始します。",
-  "未知への挑戦を記録しました。"
-];
-document.getElementById("message").innerText =
-  messages[Math.floor(Math.random()*messages.length)];
-
-const ideas=[
-  "巨大化する",
-  "逆転する",
-  "未来化する",
-  "合体する",
-  "擬人化する",
-  "自動化する",
-  "別用途に変える"
-];
-document.getElementById("idea").innerText =
-  ideas[Math.floor(Math.random()*ideas.length)];
-
-</script>
-
-</body>
-</html>
+IMURU Research Network © 2026
