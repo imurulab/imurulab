@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>キリンゴリラ CEO | IMURU Inc.</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500&family=Megrim&family=Zen+Kaku+Gothic+New:wght@500;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{ margin:0; padding:0; box-sizing:border-box; }
+
+:root{
+  --bg-1:#020617;
+  --bg-2:#0f172a;
+  --bg-3:#1e293b;
+  --cyan:#7dd3fc;
+  --gold:#facc15;
+  --text:#e2e8f0;
+  --muted:#94a3b8;
+  --faint:#64748b;
+  --display: "Space Grotesk", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --body-font: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+  --mono: "JetBrains Mono", monospace;
+  --jp-display: "Zen Kaku Gothic New", var(--display);
+}
+
+html{ scroll-behavior:smooth; }
+
+body{
+  font-family:var(--body-font);
+  background: linear-gradient(135deg, var(--bg-1), var(--bg-2), var(--bg-3));
+  color:var(--text);
+  min-height:100vh;
+  position:relative;
+}
+
+.bg-video{
+  position:fixed; top:0; left:0;
+  width:100%; height:100%;
+  object-fit:cover;
+  z-index:-2;
+}
+
+.bg-overlay{
+  position:fixed; top:0; left:0;
+  width:100%; height:100%;
+  background: radial-gradient(circle at 50% 0%, rgba(15,23,42,0.35), rgba(2,6,23,0.82) 70%);
+  z-index:-1;
+}
+
+.detail{
+  max-width:720px;
+  margin:0 auto;
+  padding:70px 32px 100px;
+}
+
+.back-link{
+  display:inline-block;
+  font-family:var(--mono);
+  font-size:0.8rem;
+  letter-spacing:1px;
+  color:var(--muted);
+  text-decoration:none;
+  margin-bottom:60px;
+}
+.back-link:hover{ color:var(--cyan); }
+
+.eyebrow{
+  font-family:var(--mono);
+  font-size:0.75rem;
+  letter-spacing:4px;
+  color:var(--cyan);
+  text-transform:uppercase;
+}
+
+.ceo-title{
+  margin-top:16px;
+  font-family:var(--jp-display);
+  font-size:3rem;
+  font-weight:700;
+  letter-spacing:4px;
+  color:var(--gold);
+}
+
+.ceo-role{
+  margin-top:10px;
+  font-family:var(--mono);
+  font-size:0.85rem;
+  letter-spacing:1px;
+  color:var(--muted);
+}
+
+.intro{
+  margin-top:34px;
+  line-height:1.9;
+  font-size:1.05rem;
+  color:var(--text);
+  max-width:520px;
+}
+
+.section-divider{
+  margin:64px 0 40px;
+  height:1px;
+  background:rgba(255,255,255,0.1);
+}
+
+.philosophy-label{
+  font-family:var(--mono);
+  font-size:0.75rem;
+  letter-spacing:3px;
+  color:var(--cyan);
+  text-transform:uppercase;
+  margin-bottom:36px;
+}
+
+.principle{
+  display:flex;
+  gap:28px;
+  padding:28px 0;
+  border-top:1px solid rgba(255,255,255,0.08);
+}
+
+.principle:last-child{
+  border-bottom:1px solid rgba(255,255,255,0.08);
+}
+
+.principle-number{
+  font-family:var(--mono);
+  font-size:0.85rem;
+  color:var(--faint);
+  padding-top:4px;
+  min-width:28px;
+}
+
+.principle-body h3{
+  font-family:var(--display);
+  font-size:1.25rem;
+  font-weight:700;
+  color:white;
+}
+
+.principle-quote{
+  margin-top:8px;
+  font-family:var(--jp-display);
+  font-size:1.05rem;
+  font-weight:500;
+  color:var(--gold);
+}
+
+.principle-desc{
+  margin-top:10px;
+  font-size:0.92rem;
+  line-height:1.8;
+  color:var(--muted);
+}
+
+.signature{
+  margin-top:60px;
+  text-align:right;
+}
+
+.signature-quote{
+  font-family:var(--jp-display);
+  font-size:1.1rem;
+  color:var(--text);
+  line-height:1.8;
+}
+
+.signature-name{
+  margin-top:14px;
+  font-family:var(--mono);
+  font-size:0.8rem;
+  letter-spacing:1px;
+  color:var(--faint);
+}
+
+@media(max-width:600px){
+  .ceo-title{ font-size:2.2rem; letter-spacing:2px; }
+  .principle{ gap:16px; }
+}
+
+</style>
+</head>
+
+<body>
+
+<video class="bg-video" autoplay muted loop playsinline>
+  <source src="motion_2.0-fast_A_single_amoeba_its_translucent_form_subtly_pulsing_begins_a_slow_deliberate_mov-0.mp4" type="video/mp4">
+</video>
+<div class="bg-overlay"></div>
+
+<div class="detail">
+
+  <a class="back-link" href="index.html">← IMURU Inc. ホームへ</a>
+
+  <div class="eyebrow">CEO Profile</div>
+  <h1 class="ceo-title">キリンゴリラ</h1>
+  <p class="ceo-role">代表取締役 CEO ／ 専門：未来予測・新規事業・バナナ経済研究</p>
+
+  <p class="intro">
+    高い視点で未来を見渡し、<br>
+    ゴリラのような力強さで挑戦する。<br><br>
+    遠くを見る目と、最初の一歩を踏み出す力。<br>
+    その両方を併せ持つことが、未来を創るということだと考えています。
+  </p>
+
+  <div class="section-divider"></div>
+
+  <div class="philosophy-label">経営理念 ／ Management Philosophy</div>
+
+  <div class="principle">
+    <span class="principle-number">01</span>
+    <div class="principle-body">
+      <h3>高い視点</h3>
+      <p class="principle-quote">見えないものほど、高い場所から見る。</p>
+      <p class="principle-desc">
+        未来予測とは、特別な能力ではなく、視点を変える習慣だと思っています。
+        目の前の景色だけでなく、少し高いところから物事を眺めることを大切にしています。
+      </p>
+    </div>
+  </div>
+
+  <div class="principle">
+    <span class="principle-number">02</span>
+    <div class="principle-body">
+      <h3>力強い実行</h3>
+      <p class="principle-quote">迷ったら、まず動いてみる。</p>
+      <p class="principle-desc">
+        新規事業に正解はありません。考え込むより先に、小さく動いて確かめる。
+        その力強さこそ、研究を前に進める一番の方法だと考えています。
+      </p>
+    </div>
+  </div>
+
+  <div class="principle">
+    <span class="principle-number">03</span>
+    <div class="principle-body">
+      <h3>バナナ経済</h3>
+      <p class="principle-quote">余裕のないところに、良い発想は実らない。</p>
+      <p class="principle-desc">
+        バナナ経済研究とは、遊びや余白そのものを資源として捉える研究分野です。
+        効率だけを追わず、ゆとりを持つことが、結果的に良い発想を育てます。
+      </p>
+    </div>
+  </div>
+
+  <div class="signature">
+    <p class="signature-quote">
+      「未完成も、価値として保存する。」<br>
+      その姿勢を、経営においても忘れないようにしています。
+    </p>
+    <p class="signature-name">— キリンゴリラ</p>
+  </div>
+
+</div>
+
+</body>
+</html>
