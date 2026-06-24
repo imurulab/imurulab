@@ -62,8 +62,8 @@ HTML / CSS / JavaScript のみで構成されたシングルページで、外�
 | 部門 | 必要レベル |
 |---|---|
 | 企画研究部（Idea Development） | LV.10 |
-| 言語研究部（Language Research） | LV.3 |
-| 遊び研究部（Entertainment） | LV.20 |
+| 言語研究部（Language Research） | LV.50 |
+| 遊び研究部（Entertainment） | LV.100 |
 
 ## 🎨 デザイン
 
