@@ -456,6 +456,102 @@ main{
   letter-spacing:1px;
 }
 
+/* ---------- 暗号キー ポップアップ ---------- */
+
+.key-overlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(2,6,23,0.85);
+  backdrop-filter:blur(6px);
+  z-index:100;
+  align-items:center;
+  justify-content:center;
+}
+
+.key-overlay.active{
+  display:flex;
+}
+
+.key-modal{
+  background:var(--bg-2);
+  border:1px solid rgba(125,211,252,0.3);
+  border-radius:20px;
+  padding:40px;
+  width:90%;
+  max-width:400px;
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+  text-align:center;
+}
+
+.key-modal h2{
+  font-family:var(--display);
+  font-size:1.2rem;
+  color:var(--cyan);
+  letter-spacing:2px;
+}
+
+.key-modal p{
+  font-size:0.9rem;
+  color:var(--muted);
+}
+
+.key-input{
+  font-family:var(--mono);
+  font-size:1rem;
+  padding:12px 16px;
+  border-radius:10px;
+  border:1px solid rgba(125,211,252,0.3);
+  background:rgba(255,255,255,0.05);
+  color:var(--text);
+  text-align:center;
+  outline:none;
+  letter-spacing:4px;
+}
+
+.key-input:focus{
+  border-color:var(--cyan);
+}
+
+.key-btn{
+  font-family:var(--mono);
+  font-size:0.85rem;
+  padding:12px;
+  border-radius:10px;
+  border:none;
+  background:rgba(125,211,252,0.15);
+  color:var(--cyan);
+  cursor:pointer;
+  letter-spacing:2px;
+  transition:.2s;
+}
+
+.key-btn:hover{
+  background:rgba(125,211,252,0.3);
+}
+
+.key-cancel{
+  font-family:var(--mono);
+  font-size:0.75rem;
+  color:var(--faint);
+  cursor:pointer;
+  background:none;
+  border:none;
+  letter-spacing:1px;
+}
+
+.key-cancel:hover{
+  color:var(--muted);
+}
+
+.key-error{
+  font-size:0.8rem;
+  color:#f87171;
+  min-height:1.2em;
+}
+
 @media(max-width:700px){
   .logo{ font-size:2.8rem; letter-spacing:6px; }
   .split{ grid-template-columns:1fr; gap:36px; }
@@ -518,7 +614,7 @@ main{
   <section class="section divisions">
     <div class="section-label">Business Division</div>
     <div class="division-grid">
-      <a class="division-tile lockable" href="ideas.html" data-required-level="10">
+      <a class="division-tile lockable" href="ideas.html" data-required-level="10" data-secret="imuru01" onclick="return handleIdeaTile(event, this);">
         <span class="d-badge lock-badge"></span>
         <span class="d-icon">💡</span>
         <span class="d-en">Idea Development</span>
@@ -613,6 +709,17 @@ main{
 
 <div class="footer">IMURU Research Network © 2026</div>
 
+<div class="key-overlay" id="keyOverlay">
+  <div class="key-modal">
+    <h2>🔐 企画研究部</h2>
+    <p>暗号キーを入力してください。<br>正しいキーでアクセスが解放されます。</p>
+    <input class="key-input" id="keyInput" type="password" placeholder="* * * * * * * *" maxlength="20">
+    <p class="key-error" id="keyError"></p>
+    <button class="key-btn" onclick="checkKey()">解放する</button>
+    <button class="key-cancel" onclick="closeKeyModal()">キャンセル</button>
+  </div>
+</div>
+
 <audio id="bgm" loop>
   <source src="images/Tropical Fish.mp3" type="audio/mpeg">
 </audio>
@@ -662,6 +769,42 @@ const messages=[
   "本日は瞑想をすべし。",
   "未知への挑戦を記録しました。"
 ];
+// 企画研究部 暗号キー処理
+function handleIdeaTile(event, tile){
+  const required = Number(tile.dataset.requiredLevel);
+  const unlocked = localStorage.getItem("imuru_idea_unlocked") === "1";
+  if(currentLevel >= required || unlocked){
+    return true; // そのままideas.htmlへ
+  }
+  event.preventDefault();
+  document.getElementById("keyOverlay").classList.add("active");
+  document.getElementById("keyInput").value = "";
+  document.getElementById("keyError").textContent = "";
+  setTimeout(()=>document.getElementById("keyInput").focus(), 100);
+  return false;
+}
+
+function checkKey(){
+  const input = document.getElementById("keyInput").value.trim();
+  if(input === "imuru01"){
+    localStorage.setItem("imuru_idea_unlocked", "1");
+    document.getElementById("keyOverlay").classList.remove("active");
+    window.location.href = "ideas.html";
+  } else {
+    document.getElementById("keyError").textContent = "キーが違います。もう一度お試しください。";
+    document.getElementById("keyInput").value = "";
+  }
+}
+
+function closeKeyModal(){
+  document.getElementById("keyOverlay").classList.remove("active");
+}
+
+// Enterキーで送信
+document.getElementById("keyInput").addEventListener("keydown", function(e){
+  if(e.key === "Enter") checkKey();
+});
+
 document.getElementById("message").innerText =
   messages[Math.floor(Math.random()*messages.length)];
 
