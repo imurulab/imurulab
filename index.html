@@ -567,7 +567,7 @@ main{
         <span class="d-jp">音源配信部</span>
         <span class="d-note">最新リリース「ロシアンルーレット」配信中</span>
       </a>
-      <a class="division-tile" href="#careers">
+　　　　　<a class="division-tile" href="#careers" onclick="const b=document.getElementById('bgm');b.paused?b.play():b.pause();">
         <span class="d-icon">👥</span>
         <span class="d-en">Creator Division</span>
         <span class="d-jp">クリエイター部門</span>
@@ -700,5 +700,8 @@ document.getElementById("idea").innerText =
 
 </script>
 
+<audio id="bgm" loop>
+  <source src="images/Tropical Fish.mp3" type="audio/mpeg">
+</audio>  
 </body>
 </html>
