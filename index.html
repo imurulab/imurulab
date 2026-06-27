@@ -543,7 +543,7 @@ main{
         <span class="d-jp">音源配信部</span>
         <span class="d-note">最新リリース「ロシアンルーレット」配信中</span>
       </a>
-      <a class="division-tile" href="#careers" onclick="const b=document.getElementById('bgm');b.paused?b.play():b.pause();return false;">
+      <a class="division-tile" href="#careers" onclick="event.preventDefault();const b=document.getElementById('bgm');b.paused?b.play():b.pause();document.getElementById('careers').scrollIntoView({behavior:'smooth'});">
         <span class="d-icon">👥</span>
         <span class="d-en">Creator Division</span>
         <span class="d-jp">クリエイター部門</span>
@@ -675,6 +675,8 @@ const ideas=[
   "自動化する",
   "別用途に変える"
 ];
+document.getElementById("bgm").volume = 0.3;
+document.getElementById("bgm").volume = 0.3;
 document.getElementById("idea").innerText =
   ideas[Math.floor(Math.random()*ideas.length)];
 
