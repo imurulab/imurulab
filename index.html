@@ -43,8 +43,6 @@ body{
   position:relative;
 }
 
-/* ---------- 背景動画 ---------- */
-
 .bg-video{
   position:fixed;
   top:0; left:0;
@@ -61,8 +59,6 @@ body{
     radial-gradient(circle at 50% 0%, rgba(15,23,42,0.35), rgba(2,6,23,0.82) 70%);
   z-index:-1;
 }
-
-/* ---------- 共通レイアウト ---------- */
 
 main{
   max-width:960px;
@@ -84,8 +80,6 @@ main{
   color:var(--text);
   font-size:1.05rem;
 }
-
-/* ---------- ヒーロー ---------- */
 
 .hero{
   min-height:92vh;
@@ -154,14 +148,10 @@ main{
   50%{ transform:translateY(8px); opacity:1; }
 }
 
-/* ---------- セクション共通 ---------- */
-
 .section{
   padding:90px 0;
   border-top:1px solid rgba(255,255,255,0.08);
 }
-
-/* ---------- Philosophy ---------- */
 
 .philosophy-text{
   font-family:var(--display);
@@ -170,8 +160,6 @@ main{
   line-height:1.7;
   color:var(--text);
 }
-
-/* ---------- Leadership ---------- */
 
 .ceo-name{
   font-family:"Zen Kaku Gothic New", var(--display);
@@ -223,8 +211,6 @@ main{
   border-radius:20px;
   color:var(--cyan);
 }
-
-/* ---------- Divisions ---------- */
 
 .division-grid{
   display:grid;
@@ -322,8 +308,6 @@ main{
   color:var(--muted);
 }
 
-/* ---------- Careers ---------- */
-
 .career-strip{
   display:flex;
   align-items:flex-start;
@@ -388,8 +372,6 @@ main{
   color:var(--gold);
 }
 
-/* ---------- Today's Research / Future Message ---------- */
-
 .split{
   display:grid;
   grid-template-columns:1fr 1fr;
@@ -412,8 +394,6 @@ main{
   color:var(--cyan);
   font-family:var(--mono);
 }
-
-/* ---------- ステータスバー（最上部・一行） ---------- */
 
 .status-bar{
   position:sticky;
@@ -467,8 +447,6 @@ main{
   50%{ opacity:0.3; }
 }
 
-/* ---------- フッター ---------- */
-
 .footer{
   text-align:center;
   padding:40px;
@@ -477,8 +455,6 @@ main{
   font-size:0.8rem;
   letter-spacing:1px;
 }
-
-/* ---------- レスポンシブ（最低限） ---------- */
 
 @media(max-width:700px){
   .logo{ font-size:2.8rem; letter-spacing:6px; }
@@ -567,7 +543,7 @@ main{
         <span class="d-jp">音源配信部</span>
         <span class="d-note">最新リリース「ロシアンルーレット」配信中</span>
       </a>
-　　　　　<a class="division-tile" href="#careers" onclick="const b=document.getElementById('bgm');b.paused?b.play():b.pause();">
+      <a class="division-tile" href="#careers" onclick="const b=document.getElementById('bgm');b.paused?b.play():b.pause();return false;">
         <span class="d-icon">👥</span>
         <span class="d-en">Creator Division</span>
         <span class="d-jp">クリエイター部門</span>
@@ -637,6 +613,10 @@ main{
 
 <div class="footer">IMURU Research Network © 2026</div>
 
+<audio id="bgm" loop>
+  <source src="images/Tropical Fish.mp3" type="audio/mpeg">
+</audio>
+
 <script>
 
 let visits = Number(localStorage.getItem("imuru_visits") || 0);
@@ -700,8 +680,5 @@ document.getElementById("idea").innerText =
 
 </script>
 
-<audio id="bgm" loop>
-  <source src="images/Tropical Fish.mp3" type="audio/mpeg">
-</audio>  
 </body>
 </html>
