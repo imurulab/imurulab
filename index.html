@@ -288,6 +288,31 @@ main{
   border-color:rgba(74,222,128,0.4);
 }
 
+.division-tile.danger{
+  border-color:rgba(248,113,113,0.5);
+  background:rgba(248,113,113,0.06);
+}
+
+.division-tile.danger:hover{
+  background:rgba(248,113,113,0.14);
+  border-color:rgba(248,113,113,0.8);
+  transform:translateY(-4px);
+}
+
+.division-tile.danger .d-en{
+  color:#fca5a5;
+}
+
+.division-tile.danger.locked{
+  border-color:rgba(248,113,113,0.3);
+}
+
+.d-badge.danger-badge{
+  background:rgba(248,113,113,0.15);
+  color:#f87171;
+  border-color:rgba(248,113,113,0.5);
+}
+
 .d-note{
   margin-top:4px;
   font-size:0.8rem;
@@ -614,12 +639,6 @@ main{
   <section class="section divisions">
     <div class="section-label">Business Division</div>
     <div class="division-grid">
-      <a class="division-tile lockable" href="ideas.html" data-required-level="10" data-secret="imuru01" onclick="return handleIdeaTile(event, this);">
-        <span class="d-badge lock-badge"></span>
-        <span class="d-icon">💡</span>
-        <span class="d-en">Idea Development</span>
-        <span class="d-jp">企画研究部</span>
-      </a>
       <a class="division-tile lockable" href="language.html" data-required-level="3">
         <span class="d-badge lock-badge"></span>
         <span class="d-icon">🗣️</span>
@@ -631,6 +650,12 @@ main{
         <span class="d-icon">🎮</span>
         <span class="d-en">Entertainment</span>
         <span class="d-jp">遊び研究部</span>
+      </a>
+      <a class="division-tile danger lockable" href="ideas.html" data-required-level="100" data-secret="imuru01" onclick="return handleIdeaTile(event, this);">
+        <span class="d-badge danger-badge lock-badge"></span>
+        <span class="d-icon">💡</span>
+        <span class="d-en">Idea Development</span>
+        <span class="d-jp">企画研究部</span>
       </a>
       <a class="division-tile" href="https://open.spotify.com/artist/0oNsvbcBUtlcrwX3NywQ9F" target="_blank" rel="noopener noreferrer">
         <span class="d-badge external">SPOTIFY</span>
@@ -665,10 +690,10 @@ main{
     <div class="career-strip">
       <div class="career-col">
         <div class="career-top">
-          <span class="career-title">アイデア協力者</span>
-          <span class="career-tag">無償・自由参加</span>
+          <span class="career-title">演者・パフォーマー</span>
+          <span class="career-tag">随時募集</span>
         </div>
-        <p class="career-desc">思いつきをぶつけてくれるだけで十分です</p>
+        <p class="career-desc">歌・演技・パフォーマンスで研究を彩ってくれる方を探しています</p>
       </div>
       <div class="career-divider"></div>
       <div class="career-col">
